@@ -1,0 +1,70 @@
+to connect our private repo to visual code to generate ssh key first
+#ssh-keygen (give enter to all asked while using the command) (this generates a key to be used in git setting)
+#cd .ssh
+#ls (sample output will be id_ed25519 id_ed25519.pub known_hosts)use the .pub to get your SSH key
+#cat id_ed25519.pub (output will be "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGJhVJYBtw5bFIED1G+XNhmJJg83HLWoN9G4LZjUlOfj MIDHRAN@DESKTOP-UJEKQ9E")
+
+ADD THIS SSH KEY TO GIT
+now got to Git -->right top corner-->profie-->setting--->ssh and gen key--> in title give some name and in key attach the "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGJhVJYBtw5bFIED1G+XNhmJJg83HLWoN9G4LZjUlOfj MIDHRAN@DESKTOP-UJEKQ9E" without space
+
+CONFIGURE THE EMALI AND USER NAME
+#git config --global user.email "mnmidhran@gmail.com"
+#git config --global user.name "midhran"
+
+NOW CLONE THE REPO
+#cd devops (our devops file where the project repo to be cloned)
+
+CREATE SOME FILE TO PUSH TO GIT
+#cd project1 (go to the folder name)
+#touch java
+#touch pyhton.py
+
+NEED TO PUSH THIS TO GIT USING CMD
+#git add . (if need to add all the files inside the folder) || if ned to push just specfic file then #git add .python.py
+#git commit -m "type the message"
+#git push
+
+CREATE NEW BRNACH (SUB BRANCH)
+#git branch
+#git checkout -b dev (the name foe the branch for now gave as dev)
+
+CREATE NEW FILE AND PUSH IT TO SUB BRANCH
+#git add python3 (just pushing the specfic file)
+#git commit -m "message"
+#git push origin dev
+
+#git pull
+
+
+terraform Lifecycle commands
+
+#terraform init     #initiates the terraform
+#terraform plan     #create a sample run and see it can create
+#terraform apply   # actually runs the code and create an instance
+#terraform destroy 
+
+Helper commands
+#terraform validate
+#terraform fmt
+
+
+TERRAFORM VARIABLES CALL
+
+create file with variable.tf and use the below sample syntax
+#variable "ami_name" {
+#    default = "ami-032dc8162f6a8a197"  
+#}
+
+in main file where u hvae called use like
+##ami = var.ami_name
+
+then give #export AWS_PROFILE=default(based on your env name)
+then run #terraform plan  u will get the ouptu what u have called in varibale file
+
+#export TF_NAME_ami_name="ami-032dc8162f25489456g"   now this will overright the file in variable .tf as this will be your first priority to consider.
+
+create file called variable.tfvars what varibale been insde this will be give higher priority 
+#instance_type ="t3.small"   --so now our instacne will be based on this t3.small not what is called on variables.tf file.
+
+Last high priopirty variable call is on run time use the below command
+#terraform plan -var instance="t3.medium"
